@@ -22,8 +22,8 @@ return(
 const styles = StyleSheet.create({
     backgroundStyle: 
     {
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 20,
+        marginBottom: 30,
         backgroundColor: '#DDDDDD',
         height: 50,
         borderRadius: 5,

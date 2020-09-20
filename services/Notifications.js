@@ -3,6 +3,7 @@ import * as Notifications from 'expo-notifications';
 class NotificationHandler {
   
     scheduleNotification(title) {
+      if (title == '') title = 'Test Notification'
         Notifications.scheduleNotificationAsync({
             content: {
               title: title

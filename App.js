@@ -4,26 +4,21 @@ import { StyleSheet, Text, View } from 'react-native';
 import TextInputField from './components/TextInput'
 import StandartButton from './components/Button'
 import Notification from './services/Notifications'
+import OpenInBrowser from './services/OpenUrl'
+import CameraOrientation from './enums/CameraOrientations'
+import CustomRadioButton from './components/CustomRadioButton'
 
 export default function App() {
   const [text, setText] = useState('');
   const [cameraIsOpen, switchCamera] = useState(false);
+  const [cameraOrientation, setCameraOrientation] = useState(CameraOrientation.Back);
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      <TextInputField
-      term = {text}
-      onChange = {setText}
-      onSubmit = {()=>{
-       console.log(text) 
-        setText('')}
-      }
-      >
-
-
-      </TextInputField>
+      {/* // Fill blank space */}
+      <View style={{flex: 1}}/>
 
       <View style = {styles.buttons}>
         <StandartButton
@@ -38,13 +33,22 @@ export default function App() {
           iconName = 'aperture'
           action = {()=>{}}
           />
-
       </View>
-
+      
       <View style = {styles.radioButtons}> 
-        <Text>Radio Buttons</Text>
+        <CustomRadioButton
+          value = {CameraOrientation.Back}
+          state = {cameraOrientation}
+          setState = {setCameraOrientation}
+        />
+        <CustomRadioButton
+          value = {CameraOrientation.Front}
+          state = {cameraOrientation}
+          setState = {setCameraOrientation}
+        />
       </View>
-
+   
+      
       <View style = {styles.buttons}>
           <StandartButton
           buttonTitle = 'Notification'
@@ -57,9 +61,17 @@ export default function App() {
           <StandartButton
           buttonTitle = 'Search'
           iconName = 'search'
-          action = {()=>{}}
+          action = {()=>{OpenInBrowser(text)}}
           />
       </View>
+
+      <TextInputField
+        term = {text}
+        onChange = {setText}
+        onSubmit = {()=>{
+          console.log(text) 
+          }} 
+      />
 
     </View>
   );
@@ -67,7 +79,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column-reverse',
+    flexDirection: 'column',
     flex: 1,
     // marginTop: 10,
     // marginBottom: 20,
@@ -78,17 +90,10 @@ const styles = StyleSheet.create({
   radioButtons: {
     flexDirection: 'row',
     height: 50,
-    backgroundColor: 'red'
-  },
-  radioButton: {
-    height: 30,
-    backgroundColor: 'red',
-    justifyContent: 'space-around'
   },
   buttons: {
     flexDirection: 'row',
     alignItems: 'stretch',
-    backgroundColor: 'orange',
     justifyContent: 'space-around'
   }
 });
