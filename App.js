@@ -7,6 +7,7 @@ import Notification from './services/Notifications'
 import OpenInBrowser from './services/OpenUrl'
 import CameraOrientation from './enums/CameraOrientations'
 import CustomRadioButton from './components/CustomRadioButton'
+import * as Email from './services/Email'
 
 export default function App() {
   const [text, setText] = useState('');
@@ -51,17 +52,22 @@ export default function App() {
       
       <View style = {styles.buttons}>
           <StandartButton
-          buttonTitle = 'Notification'
+          buttonTitle = 'Send Notif'
           iconName = 'bell'
           action = {()=>{
-            Notification.scheduleNotification(title = 'Hello')
-          }}
+            Notification.scheduleNotification(title = text)}}
           />
 
           <StandartButton
           buttonTitle = 'Search'
           iconName = 'search'
           action = {()=>{OpenInBrowser(text)}}
+          />
+
+          <StandartButton
+          buttonTitle = 'Send Email'
+          iconName = 'mail'
+          action = {()=>{Email.composeEmail(text)}}
           />
       </View>
 
@@ -97,3 +103,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   }
 });
+
+// TODO add calendar or mail

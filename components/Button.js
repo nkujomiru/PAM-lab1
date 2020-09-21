@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 10,
         marginBottom: 10,
-        marginHorizontal: 15,
+        marginHorizontal: 10,
         backgroundColor: '#DDDDDD',
         height: 50,
         borderRadius: 5,
@@ -31,12 +31,13 @@ const styles = StyleSheet.create({
     },
     inputStyle:{
         flex:1,
-        fontSize:18        
+        fontSize:18,
+        marginRight: 2       
     },
     iconStyle:{
         fontSize: 30,
         alignSelf: 'center',
-        marginHorizontal:7
+        marginHorizontal:6
     }
 });
 
