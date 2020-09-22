@@ -8,31 +8,37 @@ import OpenInBrowser from './services/OpenUrl'
 import CameraOrientation from './enums/CameraOrientations'
 import CustomRadioButton from './components/CustomRadioButton'
 import * as Email from './services/Email'
+import  MyCamera, {takePicture} from './components/Camera'
 
 export default function App() {
   const [text, setText] = useState('');
   const [cameraIsOpen, switchCamera] = useState(false);
   const [cameraOrientation, setCameraOrientation] = useState(CameraOrientation.Back);
 
+  const cameraRef = React.createRef()
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      {/* // Fill blank space */}
-      <View style={{flex: 1}}/>
+      <MyCamera 
+      cameraIsOpen = {cameraIsOpen}
+      cameraOrientation = {cameraOrientation}
+      cameraRef = { cameraRef}>
+      </MyCamera>
 
       <View style = {styles.buttons}>
         <StandartButton
           buttonTitle = {!cameraIsOpen ? 'Enable Camera' : 'Disable Camera'}
           iconName = 'camera'
           action = {()=>{
-            console.log('Enable tapped ', cameraIsOpen)
+            console.log('Enable tapped, cameraIsOpen= ', cameraIsOpen)
             switchCamera(!cameraIsOpen)
           }}/>
         <StandartButton
           buttonTitle = 'Capture'
           iconName = 'aperture'
-          action = {()=>{}}
+          action = {()=>{takePicture(cameraRef)}}
           />
       </View>
       
