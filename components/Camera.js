@@ -1,8 +1,9 @@
 import { View , Text, StyleSheet} from "react-native"
 import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
 import React, { useState, useEffect }  from 'react';
 import CameraOrientation from '../enums/CameraOrientations'
-
+import FileSystem from 'expo-file-system'
 
 export default MyCamera = ({cameraIsOpen, cameraOrientation, cameraRef}) =>
 {
@@ -45,22 +46,28 @@ export default MyCamera = ({cameraIsOpen, cameraOrientation, cameraRef}) =>
 
 export const takePicture = async (cameraRef) => {      
 	if (cameraRef.current) {
-		cameraRef.current.takePictureAsync({ onPictureSaved: onPictureSaved });
+		var picture = await cameraRef.current.takePictureAsync();
+		// await FileSystem.copyAsync(picture.uri, FileSystem.documentDirectory+'photos')
+		// await pickImage()
+		return picture.uri
 	}
 };
 const onPictureSaved = photo => {
 	navigation.navigate('Picture', {url: photo.uri});
-} 
-
-
+}  
+const pickImage = async () => {
+	let result = await ImagePicker.launchImageLibraryAsync({
+		mediaTypes: ImagePicker.MediaTypeOptions.Images,
+	});
+}
 
 const styles = StyleSheet.create({
 	container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'stretch',
     justifyContent: 'flex-end',
-    padding: 5
+	
   },
   camera: {
     flex: 1,

@@ -9,23 +9,36 @@ import CameraOrientation from './enums/CameraOrientations'
 import CustomRadioButton from './components/CustomRadioButton'
 import * as Email from './services/Email'
 import  MyCamera, {takePicture} from './components/Camera'
+import Picture from './components/Picture'
+
 
 export default function App() {
   const [text, setText] = useState('');
   const [cameraIsOpen, switchCamera] = useState(false);
   const [cameraOrientation, setCameraOrientation] = useState(CameraOrientation.Back);
+  const [imageRoute, setImageRoute] = useState(false)
 
   const cameraRef = React.createRef()
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
+      {/* <StatusBar style="auto" /> */}
+      <StatusBar backgroundColor="#202020" />  
 
+    {
+     (!imageRoute ) ?
       <MyCamera 
       cameraIsOpen = {cameraIsOpen}
       cameraOrientation = {cameraOrientation}
       cameraRef = { cameraRef}>
-      </MyCamera>
+      </MyCamera> 
+      : <Picture
+         route = {imageRoute}
+      ></Picture>
+    }
+
+
+
 
       <View style = {styles.buttons}>
         <StandartButton
@@ -36,9 +49,17 @@ export default function App() {
             switchCamera(!cameraIsOpen)
           }}/>
         <StandartButton
-          buttonTitle = 'Capture'
+          buttonTitle = {(!imageRoute) ? 'Capture' : 'Go back'}
           iconName = 'aperture'
-          action = {()=>{takePicture(cameraRef)}}
+          action = {async ()=>{
+            if (!imageRoute){
+              let route  = await takePicture(cameraRef)
+              console.log(route)
+              setImageRoute(route)
+            } else {
+              setImageRoute(false)
+            }
+          }}
           />
       </View>
       
